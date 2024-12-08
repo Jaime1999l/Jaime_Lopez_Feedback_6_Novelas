@@ -1,16 +1,29 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <application
-        android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.Jaime_Lopez_Feedback_6_Novelas"
-        tools:targetApi="31" />
-
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.example.jaime_lopez_feedback_6_novelas">
+    <!--    Permisos requeridos para la aplicación    -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <!--    Añadir permisos específicos si usas ubicaciones    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+    <!--    Aplicación    -->
+    <application android:allowBackup="true" android:enableOnBackInvokedCallback="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/Theme.Jaime_Lopez_Feedback_6_Novelas" android:usesCleartextTraffic="true" tools:ignore="UnusedAttribute">
+        <!--    Configuración de Firebase    -->
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+        <meta-data android:name="com.google.firebase.messaging.default_notification_channel_id" android:value="default_channel"/>
+        <!--    Configuración de la clave de API de Google Maps    -->
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyD2XH8oaUI06qXJHK2eNmC3H7LsYKp76lw"/>
+        <!--    Actividades declaradas    -->
+        <activity android:name=".main.PantallaPrincipalActivity" android:exported="false" tools:ignore="Instantiatable"/>
+        <activity android:name=".main.ui.activity.RegisterActivity" android:exported="false" tools:ignore="Instantiatable"/>
+        <!--    Pantalla principal    -->
+        <activity android:name=".main.ui.activity.LoginActivity" android:exported="true" tools:ignore="Instantiatable">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+    </application>
 </manifest>

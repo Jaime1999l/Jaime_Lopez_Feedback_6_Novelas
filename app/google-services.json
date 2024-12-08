@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "810772548542",
+    "project_id": "novelas-6",
+    "storage_bucket": "novelas-6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810772548542:android:364a9699c7c75dd2b147ef",
+        "android_client_info": {
+          "package_name": "com.example.jaime_lopez_feedback_6_novelas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAz6Oh8St13jgkoZDlUNkP_haiHDRsi5Go"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
