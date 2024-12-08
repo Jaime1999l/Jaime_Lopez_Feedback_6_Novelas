@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_add_novel"
+        android:title="Agregar Novela"
+        android:icon="@drawable/ic_add"/> <!-- Asegúrate que ic_add exista en res/drawable -->
+
+    <item
+        android:id="@+id/action_view_favorites"
+        android:title="Ver Favoritas"
+        android:icon="@drawable/ic_favorite"/> <!-- Asegúrate que ic_favorite exista en res/drawable -->
+
+</menu>
+

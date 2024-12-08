@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/add_review_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Agregar Reseña"
+        android:textSize="24sp"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/edit_text_reviewer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre del Revisor" />
+
+    <EditText
+        android:id="@+id/edit_text_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Comentario" />
+
+    <EditText
+        android:id="@+id/edit_text_rating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Puntuación (1-5)"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/button_add_review"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Agregar Reseña"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>

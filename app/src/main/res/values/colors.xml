@@ -8,4 +8,19 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="primary">#6200EE</color>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="cardBackground">#FFFFFF</color>
+    <color name="textColor">#000000</color>
+    <color name="buttonBackground">#6200EE</color>
+    <color name="buttonTextColor">#FFFFFF</color>
+    <!--  Colores para el fondo de las tarjetas y el texto en modo claro  -->
+    <color name="card_background_color">#FFFFFF</color>
+    <!--  Fondo blanco para tarjetas  -->
+    <color name="primary_text_color">#000000</color>
+    <!--  Texto principal en negro  -->
+    <color name="secondary_text_color">#757575</color>
+    <!--  Texto secundario en gris oscuro  -->
+    <color name="divider_color">#BDBDBD</color>
 </resources>

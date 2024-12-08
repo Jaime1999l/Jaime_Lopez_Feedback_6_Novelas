@@ -16,10 +16,15 @@
         <!--    Configuración de la clave de API de Google Maps    -->
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyD2XH8oaUI06qXJHK2eNmC3H7LsYKp76lw"/>
         <!--    Actividades declaradas    -->
-        <activity android:name=".main.PantallaPrincipalActivity" android:exported="false" tools:ignore="Instantiatable"/>
-        <activity android:name=".main.ui.activity.RegisterActivity" android:exported="false" tools:ignore="Instantiatable"/>
+        <activity android:name=".PantallaPrincipalActivity" android:exported="false" tools:ignore="Instantiatable"/>
+        <activity android:name=".activity.RegisterActivity" android:exported="false" tools:ignore="Instantiatable"/>
+        <activity android:name=".activity.AddNovelActivity" android:exported="false" tools:ignore="Instantiatable"/>
+        <activity android:name=".activity.AddReviewActivity" android:exported="false" tools:ignore="Instantiatable"/>
+        <activity android:name=".activity.FavoritesActivity" android:exported="false" tools:ignore="Instantiatable"/>
+        <activity android:name=".activity.ReviewActivity" android:exported="false" tools:ignore="Instantiatable"/>
+        <activity android:name=".activity.SettingsActivity" android:exported="false" tools:ignore="Instantiatable"/>
         <!--    Pantalla principal    -->
-        <activity android:name=".main.ui.activity.LoginActivity" android:exported="true" tools:ignore="Instantiatable">
+        <activity android:name=".activity.LoginActivity" android:exported="true" tools:ignore="Instantiatable">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

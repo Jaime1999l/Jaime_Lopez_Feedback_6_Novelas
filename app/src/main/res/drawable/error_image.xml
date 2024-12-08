@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Fondo rojo para indicar error -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FFCDD2" /> <!-- Fondo rojo claro -->
+            <corners android:radius="8dp" /> <!-- Bordes redondeados -->
+        </shape>
+    </item>
+
+    <!-- Icono de error superpuesto -->
+    <item>
+        <bitmap
+            android:src="@android:drawable/ic_dialog_alert"
+            android:gravity="center" />
+    </item>
+
+</layer-list>

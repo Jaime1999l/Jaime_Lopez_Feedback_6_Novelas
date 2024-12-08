@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Opción para agregar novela -->
+    <item
+        android:id="@+id/nav_add_novel"
+        android:title="Agregar Novela"
+        android:icon="@drawable/ic_add"/>
+
+    <!-- Opción para ver favoritas -->
+    <item
+        android:id="@+id/nav_view_favorites"
+        android:title="Ver Favoritas"
+        android:icon="@drawable/ic_favorite"/>
+
+</menu>

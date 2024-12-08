@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="?android:attr/windowBackground">
+
+    <!-- Título de la pantalla de Configuración -->
+    <TextView
+        android:id="@+id/text_view_settings_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Configuracion"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingBottom="16dp"
+        android:textColor="?android:attr/textColorPrimary" />
+
+    <!-- Modo Oscuro Switch -->
+    <TextView
+        android:id="@+id/text_view_dark_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Activar Modo Oscuro"
+        android:textSize="16sp"
+        android:paddingBottom="8dp"
+        android:textColor="?android:attr/textColorPrimary" />
+
+    <Switch
+        android:id="@+id/switch_dark_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Modo Oscuro" />
+</LinearLayout>
