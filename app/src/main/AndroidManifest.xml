@@ -17,6 +17,7 @@
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyD2XH8oaUI06qXJHK2eNmC3H7LsYKp76lw"/>
         <!--    Actividades declaradas    -->
         <activity android:name=".PantallaPrincipalActivity" android:exported="false" tools:ignore="Instantiatable"/>
+        <activity android:name=".activity.MapsActivity" android:exported="false" tools:ignore="Instantiatable"/>
         <activity android:name=".activity.RegisterActivity" android:exported="false" tools:ignore="Instantiatable"/>
         <activity android:name=".activity.AddNovelActivity" android:exported="false" tools:ignore="Instantiatable"/>
         <activity android:name=".activity.AddReviewActivity" android:exported="false" tools:ignore="Instantiatable"/>

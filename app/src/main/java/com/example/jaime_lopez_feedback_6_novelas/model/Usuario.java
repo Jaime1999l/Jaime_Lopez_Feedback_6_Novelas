@@ -80,3 +80,4 @@ public class Usuario {
         return "admin".equals(rol);
     }
 }
+

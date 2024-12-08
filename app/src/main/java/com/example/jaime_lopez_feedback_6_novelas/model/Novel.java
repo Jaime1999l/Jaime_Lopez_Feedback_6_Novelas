@@ -7,16 +7,18 @@ public class Novel {
     private int year;
     private String synopsis;
     private boolean favorite;
+    private Ubicacion ubicacion;
 
     public Novel() {
     }
 
-    public Novel(String title, String author, int year, String synopsis) {
+    public Novel(String title, String author, int year, String synopsis, Ubicacion ubicacion) {
         this.title = title;
         this.author = author;
         this.year = year;
         this.synopsis = synopsis;
         this.favorite = false;
+        this.ubicacion = ubicacion;
     }
 
     public String getTitle() {
@@ -65,6 +67,14 @@ public class Novel {
 
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
+    }
+
+    public Ubicacion getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(Ubicacion ubicacion) {
+        this.ubicacion = ubicacion;
     }
 }
 

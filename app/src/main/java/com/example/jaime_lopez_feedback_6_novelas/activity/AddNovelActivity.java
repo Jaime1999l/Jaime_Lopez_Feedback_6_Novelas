@@ -1,9 +1,12 @@
 package com.example.jaime_lopez_feedback_6_novelas.activity;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,11 +15,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.jaime_lopez_feedback_6_novelas.R;
 import com.example.jaime_lopez_feedback_6_novelas.databaseSQL.SQLiteHelper;
 import com.example.jaime_lopez_feedback_6_novelas.model.Novel;
+import com.example.jaime_lopez_feedback_6_novelas.model.Ubicacion;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.UUID;
@@ -31,6 +39,9 @@ public class AddNovelActivity extends AppCompatActivity {
 
     private boolean isLowBattery = false;
     private BroadcastReceiver batteryReceiver;
+
+    private FusedLocationProviderClient fusedLocationClient;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +58,9 @@ public class AddNovelActivity extends AppCompatActivity {
         editTextYear = findViewById(R.id.edit_text_year);
         editTextSynopsis = findViewById(R.id.edit_text_synopsis);
         buttonSave = findViewById(R.id.button_save);
+
+        // Inicializar ubicación
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         // Configurar listener para el botón Guardar
         buttonSave.setOnClickListener(v -> saveNovel());
@@ -80,32 +94,53 @@ public class AddNovelActivity extends AppCompatActivity {
             return;
         }
 
-        Novel novel = new Novel(title, author, year, synopsis);
-
-        if (novelId != null) {
-            novel.setId(novelId);
-            db.collection("novelas").document(novelId).set(novel)
-                    .addOnSuccessListener(aVoid -> {
-                        Toast.makeText(AddNovelActivity.this, "Novela actualizada", Toast.LENGTH_SHORT).show();
-                        sqliteHelper.updateNovel(novel);
-                        finish();
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(AddNovelActivity.this, "Error al actualizar la novela", Toast.LENGTH_SHORT).show();
-                    });
-        } else {
-            String randomId = UUID.randomUUID().toString();
-            novel.setId(randomId);
-            db.collection("novelas").document(randomId).set(novel)
-                    .addOnSuccessListener(aVoid -> {
-                        Toast.makeText(AddNovelActivity.this, "Novela agregada", Toast.LENGTH_SHORT).show();
-                        sqliteHelper.addNovel(novel);
-                        finish();
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(AddNovelActivity.this, "Error al agregar la novela", Toast.LENGTH_SHORT).show();
-                    });
+        // Solicitar ubicación actual
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+            return;
         }
+
+        fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
+            if (location != null) {
+                // Generar ubicación aleatoria en base a la ubicación actual
+                Ubicacion randomUbicacion = generateRandomLocation(location.getLatitude(), location.getLongitude(), 1000);
+                Novel novel = new Novel(title, author, year, synopsis, randomUbicacion);
+                saveNovelToDatabase(novel);
+            } else {
+                Toast.makeText(this, "No se pudo obtener la ubicación", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void saveNovelToDatabase(Novel novel) {
+        String randomId = UUID.randomUUID().toString();
+        novel.setId(randomId);
+
+        db.collection("novelas").document(randomId).set(novel)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(AddNovelActivity.this, "Novela agregada", Toast.LENGTH_SHORT).show();
+                    sqliteHelper.addNovel(novel);
+                    finish();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(AddNovelActivity.this, "Error al agregar la novela", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private Ubicacion generateRandomLocation(double centerLat, double centerLng, int radiusInMeters) {
+        double radiusInDegrees = radiusInMeters / 111000f;
+
+        double u = Math.random();
+        double v = Math.random();
+        double w = radiusInDegrees * Math.sqrt(u);
+        double t = 2 * Math.PI * v;
+        double deltaLat = w * Math.cos(t);
+        double deltaLng = w * Math.sin(t) / Math.cos(Math.toRadians(centerLat));
+
+        double randomLat = centerLat + deltaLat;
+        double randomLng = centerLng + deltaLng;
+
+        return new Ubicacion(randomLat, randomLng, "Ubicación aleatoria");
     }
 
     private void loadNovelDetails(String novelId) {
@@ -124,46 +159,31 @@ public class AddNovelActivity extends AppCompatActivity {
                 });
     }
 
-    /**
-     * Método para monitorear el estado de la batería.
-     */
     private void monitorBatteryState() {
         IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         batteryReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                // Obtener el nivel y la escala de la batería
                 int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
                 int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
                 float batteryPct = (level / (float) scale) * 100;
 
-                // Determinar si la batería está baja (por debajo del 20%)
                 isLowBattery = batteryPct < 20;
-
-                // Ajustar el brillo de la pantalla según el estado de la batería
                 adjustScreenBrightness();
             }
         };
         registerReceiver(batteryReceiver, filter);
     }
 
-    /**
-     * Método para ajustar el brillo de la pantalla según el estado de la batería.
-     */
     private void adjustScreenBrightness() {
-        // Obtener los parámetros de la ventana
         WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
-
         if (isLowBattery) {
-            // Verificar si el brillo ya está al 70%
             if (layoutParams.screenBrightness != 0.7f) {
-                // Ajustar el brillo de la pantalla al 70%
-                layoutParams.screenBrightness = 0.7f; // Valor entre 0.0f y 1.0f (70% de brillo)
+                layoutParams.screenBrightness = 0.7f;
                 getWindow().setAttributes(layoutParams);
                 Toast.makeText(this, "Batería baja... se ha reducido el brillo.", Toast.LENGTH_SHORT).show();
             }
         } else {
-            // Restaurar el brillo de la pantalla al valor predeterminado
             if (layoutParams.screenBrightness != WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE) {
                 layoutParams.screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE;
                 getWindow().setAttributes(layoutParams);
@@ -171,11 +191,9 @@ public class AddNovelActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
-        // Ajustar el brillo al reanudar la actividad
         adjustScreenBrightness();
     }
 
@@ -184,6 +202,18 @@ public class AddNovelActivity extends AppCompatActivity {
         super.onDestroy();
         if (batteryReceiver != null) {
             unregisterReceiver(batteryReceiver);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                saveNovel();
+            } else {
+                Toast.makeText(this, "Permiso de ubicación denegado", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

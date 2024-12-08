@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.jaime_lopez_feedback_6_novelas.activity.AddNovelActivity;
 import com.example.jaime_lopez_feedback_6_novelas.activity.FavoritesActivity;
+import com.example.jaime_lopez_feedback_6_novelas.activity.MapsActivity;
 import com.example.jaime_lopez_feedback_6_novelas.activity.ReviewActivity;
 import com.example.jaime_lopez_feedback_6_novelas.activity.SettingsActivity;
 import com.example.jaime_lopez_feedback_6_novelas.model.Novel;
@@ -159,6 +160,13 @@ public class PantallaPrincipalActivity extends AppCompatActivity implements Nove
         TextView navSettings = findViewById(R.id.nav_settings);
         navSettings.setOnClickListener(v -> {
             Intent intent = new Intent(PantallaPrincipalActivity.this, SettingsActivity.class);
+            startActivity(intent);
+            drawerLayout.closeDrawers();
+        });
+
+        TextView navViewMap = findViewById(R.id.nav_view_map);
+        navViewMap.setOnClickListener(v -> {
+            Intent intent = new Intent(PantallaPrincipalActivity.this, MapsActivity.class);
             startActivity(intent);
             drawerLayout.closeDrawers();
         });
